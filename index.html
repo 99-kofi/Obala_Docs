@@ -332,25 +332,66 @@
 
         /* Responsive adjustments */
         @media (max-width: 768px) {
+            header {
+                padding: 1rem 5%;
+            }
+
             header h1 {
                 font-size: 2rem;
             }
+            header p {
+                font-size: 1rem;
+            }
+            header .tagline {
+                font-size: 1rem;
+            }
+
             .theme-toggle-button {
-                top: 1rem;
+                position: static; /* Remove absolute positioning */
+                margin-top: 1rem; /* Add some space below the tagline */
                 padding: 0.5rem 0.8rem;
                 font-size: 0.9rem;
+                width: fit-content; /* Adjust width to content */
+                margin-left: auto; /* Center the button if desired, or leave left for natural flow */
+                margin-right: auto;
             }
+
+            .container {
+                margin: 1rem auto;
+                padding: 0 4%;
+            }
+
+            section {
+                padding: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+
             h2 {
                 font-size: 1.7rem;
+                margin-bottom: 1rem;
+                padding-bottom: 0.3rem;
             }
+
             h3 {
                 font-size: 1.3rem;
+                margin-top: 1.5rem;
+                margin-bottom: 0.8rem;
             }
+
+            p, ul, ol {
+                font-size: 0.95rem;
+                margin-bottom: 0.8rem;
+            }
+
             .endpoint-url {
                 font-size: 0.85rem;
                 padding: 0.4rem 0.6rem;
+                display: block; /* Make it block to take full width */
+                word-break: break-all; /* Allow long URLs to break */
             }
+
             .code-block {
+                padding: 0.8rem;
                 padding-top: 2rem; /* Adjust padding for smaller screens */
             }
             .copy-button {
@@ -359,10 +400,61 @@
             }
             pre {
                 font-size: 0.8rem;
+                white-space: pre-wrap; /* Allow code to wrap */
+                word-break: break-all;
             }
+
             th, td {
                 padding: 0.6rem;
                 font-size: 0.9rem;
+            }
+
+            .alert {
+                padding: 0.8rem;
+                margin-top: 1rem;
+            }
+
+            footer {
+                padding: 1.5rem 5%;
+            }
+            footer p {
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+            header p, header .tagline {
+                font-size: 0.9rem;
+            }
+            .theme-toggle-button {
+                font-size: 0.85rem;
+                padding: 0.4rem 0.7rem;
+            }
+            h2 {
+                font-size: 1.5rem;
+            }
+            h3 {
+                font-size: 1.2rem;
+            }
+            p, ul, ol {
+                font-size: 0.9rem;
+            }
+            .endpoint-url, pre {
+                font-size: 0.75rem;
+            }
+            .copy-button {
+                font-size: 0.7rem;
+                padding: 0.2rem 0.5rem;
+            }
+            th, td {
+                font-size: 0.85rem;
+                padding: 0.5rem;
+            }
+            footer p {
+                font-size: 0.75rem;
             }
         }
     </style>
