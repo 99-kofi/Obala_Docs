@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OBALA API Developer Documentation - WAIT Technologies</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Roboto+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons (Copy, Sun, Moon) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Base Dark Theme (Default) */
+        :root {
+            --bg-primary: #1a1a2e; /* Dark blue-purple */
+            --bg-secondary: #0f0f1c; /* Even darker for code blocks/sections */
+            --text-primary: #e0e0e0;
+            --text-secondary: #b0b0b0;
+            --accent-green: #4CAF50; /* For success/live indicators */
+            --accent-blue: #00bcd4; /* For links/highlights */
+            --accent-red: #f44336; /* For error codes */
+            --border-color: rgba(255, 255, 255, 0.1);
+            --shadow-color: rgba(0, 0, 0, 0.3);
+            --code-bg: #282c34; /* Darker background for code */
+            --code-text: #abb2bf; /* Light gray for code */
+            --code-keyword: #c678dd; /* Purple */
+            --code-string: #98c379; /* Green */
+            --code-number: #d19a66; /* Orange */
+            --code-comment: #5c6370; /* Gray */
+            --code-header: #e06c75; /* Reddish */
+            --copy-button-bg: rgba(255, 255, 255, 0.1);
+            --copy-button-hover-bg: rgba(255, 255, 255, 0.2);
+            --toggle-button-bg: #444;
+            --toggle-button-hover-bg: #555;
+            --toggle-button-text: #e0e0e0;
+        }
+
+        /* Light Theme */
+        html[data-theme='light'] {
+            --bg-primary: #f8f8f8;
+            --bg-secondary: #ffffff;
+            --text-primary: #333333;
+            --text-secondary: #555555;
+            --accent-green: #28a745;
+            --accent-blue: #007bff;
+            --accent-red: #dc3545;
+            --border-color: rgba(0, 0, 0, 0.1);
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --code-bg: #f5f5f5;
+            --code-text: #333333;
+            --code-keyword: #007bff;
+            --code-string: #28a745;
+            --code-number: #fd7e14;
+            --code-comment: #6c757d;
+            --code-header: #e83e8c;
+            --copy-button-bg: rgba(0, 0, 0, 0.05);
+            --copy-button-hover-bg: rgba(0, 0, 0, 0.1);
+            --toggle-button-bg: #e0e0e0;
+            --toggle-button-hover-bg: #d0d0d0;
+            --toggle-button-text: #333;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        header {
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            padding: 1.5rem 5%;
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 4px 10px var(--shadow-color);
+            text-align: center;
+            position: relative; /* For toggle button positioning */
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            color: var(--accent-blue);
+        }
+
+        header p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        header .tagline {
+            font-style: italic;
+            font-size: 1.2rem;
+            color: var(--accent-green);
+        }
+
+        .theme-toggle-button {
+            position: absolute;
+            top: 1.5rem;
+            right: 5%;
+            background-color: var(--toggle-button-bg);
+            color: var(--toggle-button-text);
+            border: none;
+            border-radius: 5px;
+            padding: 0.7rem 1rem;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .theme-toggle-button:hover {
+            background-color: var(--toggle-button-hover-bg);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 5%;
+            flex-grow: 1;
+        }
+
+        section {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px var(--shadow-color);
+            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        h2 {
+            font-size: 2rem;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--accent-blue);
+            padding-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        p, ul, ol {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        ul {
+            list-style-type: disc;
+            margin-left: 1.5rem;
+        }
+
+        a {
+            color: var(--accent-blue);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--text-primary);
+            text-decoration: underline;
+        }
+
+        .endpoint-url {
+            background-color: var(--code-bg);
+            color: var(--accent-green);
+            padding: 0.5rem 0.8rem;
+            border-radius: 5px;
+            font-family: 'Roboto Mono', monospace;
+            display: inline-block;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+        }
+
+        .code-block {
+            position: relative; /* For copy button positioning */
+            background-color: var(--code-bg);
+            border-radius: 8px;
+            padding: 1rem;
+            padding-top: 2.5rem; /* Make space for the copy button */
+            margin-top: 1rem;
+            margin-bottom: 1.5rem;
+            overflow-x: auto;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .copy-button {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background-color: var(--copy-button-bg);
+            color: var(--text-secondary);
+            border: none;
+            border-radius: 5px;
+            padding: 0.4rem 0.8rem;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: background-color 0.2s ease, color 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            z-index: 10;
+        }
+
+        .copy-button:hover {
+            background-color: var(--copy-button-hover-bg);
+            color: var(--text-primary);
+        }
+
+        .copy-button i {
+            margin-right: 0.2rem;
+        }
+
+        pre {
+            margin: 0;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--code-text);
+            transition: color 0.3s ease;
+        }
+
+        /* Syntax Highlighting-like styles */
+        .code-block .keyword { color: var(--code-keyword); }
+        .code-block .string { color: var(--code-string); }
+        .code-block .number { color: var(--code-number); }
+        .code-block .comment { color: var(--code-comment); }
+        .code-block .header-key { color: var(--code-header); }
+        .code-block .method { color: var(--accent-blue); font-weight: 600; }
+        .code-block .path { color: var(--accent-green); }
+        .code-block .status-code { color: var(--accent-green); font-weight: 600; }
+        .code-block .error-code { color: var(--accent-red); font-weight: 600; }
+        .code-block .variable { color: var(--accent-blue); }
+
+        .table-container {
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            background-color: var(--bg-secondary);
+            transition: background-color 0.3s ease;
+        }
+
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 0.8rem;
+            text-align: left;
+            color: var(--text-secondary);
+            transition: border-color 0.3s ease, color 0.3s ease;
+        }
+
+        th {
+            background-color: rgba(0, 188, 212, 0.2);
+            color: var(--text-primary);
+            font-weight: 600;
+            white-space: nowrap; /* Prevent headers from wrapping too much */
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        td strong {
+            color: var(--text-primary);
+            transition: color 0.3s ease;
+        }
+
+        .alert {
+            background-color: rgba(244, 67, 54, 0.2);
+            border-left: 5px solid var(--accent-red);
+            padding: 1rem;
+            margin-top: 1.5rem;
+            border-radius: 5px;
+            color: var(--text-primary);
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+        }
+
+        .alert p {
+            margin: 0;
+            color: var(--text-primary);
+            transition: color 0.3s ease;
+        }
+
+        .checkmark {
+            color: var(--accent-green);
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .crossmark {
+            color: var(--accent-red);
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        footer {
+            background-color: var(--bg-secondary);
+            color: var(--text-secondary);
+            text-align: center;
+            padding: 2rem 5%;
+            margin-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            box-shadow: 0 -4px 10px var(--shadow-color);
+            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            .theme-toggle-button {
+                top: 1rem;
+                padding: 0.5rem 0.8rem;
+                font-size: 0.9rem;
+            }
+            h2 {
+                font-size: 1.7rem;
+            }
+            h3 {
+                font-size: 1.3rem;
+            }
+            .endpoint-url {
+                font-size: 0.85rem;
+                padding: 0.4rem 0.6rem;
+            }
+            .code-block {
+                padding-top: 2rem; /* Adjust padding for smaller screens */
+            }
+            .copy-button {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.75rem;
+            }
+            pre {
+                font-size: 0.8rem;
+            }
+            th, td {
+                padding: 0.6rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>⚡ OBALA API Developer Documentation</h1>
+        <p>Developed by WAIT Technologies</p>
+        <p class="tagline">“Connecting Ghanaian communities through voice, powered by AI.”</p>
+        <button id="theme-toggle" class="theme-toggle-button" aria-label="Toggle theme">
+            <i class="fas fa-sun"></i> <span class="toggle-text">Light Mode</span>
+        </button>
+    </header>
+
+    <div class="container">
+        <section id="base-url">
+            <h2>1. Base URL</h2>
+            <p>All endpoints listed below should be prefixed with this URL.</p>
+            <span class="endpoint-url"><code>https://obala-api.onrender.com</code></span>
+        </section>
+
+        <section id="authentication">
+            <h2>2. Authentication Overview</h2>
+            <p>OBALA uses API keys for authentication. Each user must sign up to generate their unique key.</p>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Required</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>X-API-Key</code></td>
+                            <td><span class="checkmark">✅</span> Yes</td>
+                            <td>Sent in headers to authenticate your requests</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="signup">
+            <h2>3. Create an Account (Signup)</h2>
+            <h3>Endpoint:</h3>
+            <p><span class="method">POST</span> <span class="path">/signup</span></p>
+
+            <h3>Request Body (JSON):</h3>
+            <div class="code-block">
+                <button class="copy-button" onclick="copyCode(this)"><i class="fas fa-copy"></i> Copy</button>
+<pre><code>{
+  <span class="string">"full_name"</span>: <span class="string">"Williams Opoku Antwi"</span>,
+  <span class="string">"email"</span>: <span class="string">"williams@example.com"</span>,
+  <span class="string">"password"</span>: <span class="string">"StrongPass123"</span>
+}</code></pre>
+            </div>
+
+            <h3>Example using curl:</h3>
+            <div class="code-block">
+                <button class="copy-button" onclick="copyCode(this)"><i class="fas fa-copy"></i> Copy</button>
+<pre><code><span class="keyword">curl</span> -X <span class="method">POST</span> https://obala-api.onrender.com/signup \
+-H <span class="string">"Content-Type: application/json"</span> \
+-d <span class="string">'{
+  "full_name": "Williams Opoku Antwi",
+  "email": "williams@example.com",
+  "password": "StrongPass123"
+}'</span></code></pre>
+            </div>
+
+            <h3>Response (<span class="status-code">201</span>):</h3>
+            <div class="code-block">
+                <button class="copy-button" onclick="copyCode(this)"><i class="fas fa-copy"></i> Copy</button>
+<pre><code>{
+  <span class="string">"message"</span>: <span class="string">"Signup successful"</span>,
+  <span class="string">"api_key"</span>: <span class="string">"7e5c4b8b6d9a45b293bf9d7b8b143c0a"</span>
+}</code></pre>
+            </div>
+            <div class="alert">
+                <p><strong>✅ Save your API key</strong> — it’s required for every request you make.</p>
+            </div>
+        </section>
+
+        <section id="login">
+            <h2>4. Log in to Get Your API Key</h2>
+            <h3>Endpoint:</h3>
+            <p><span class="method">POST</span> <span class="path">/login</span></p>
+
+            <h3>Request Body:</h3>
+            <div class="code-block">
+                <button class="copy-button" onclick="copyCode(this)"><i class="fas fa-copy"></i> Copy</button>
+<pre><code>{
+  <span class="string">"email"</span>: <span class="string">"williams@example.com"</span>,
+  <span class="string">"password"</span>: <span class="string">"StrongPass123"</span>
+}</code></pre>
+            </div>
+
+            <h3>Example using curl:</h3>
+            <div class="code-block">
+                <button class="copy-button" onclick="copyCode(this)"><i class="fas fa-copy"></i> Copy</button>
+<pre><code><span class="keyword">curl</span> -X <span class="method">POST</span> https://obala-api.onrender.com/login \
+-H <span class="string">"Content-Type: application/json"</span> \
+-d <span class="string">'{
+  "email": "williams@example.com",
+  "password": "StrongPass123"
+}'</span></code></pre>
+            </div>
+
+            <h3>Response (<span class="status-code">200</span>):</h3>
+            <div class="code-block">
+                <button class="copy-button" onclick="copyCode(this)"><i class="fas fa-copy"></i> Copy</button>
+<pre><code>{
+  <span class="string">"message"</span>: <span class="string">"Login successful"</span>,
+  <span class="string">"api_key"</span>: <span class="string">"7e5c4b8b6d9a45b293bf9d7b8b143c0a"</span>
+}</code></pre>
+            </div>
+        </section>
+
+        <section id="send-prompts">
+            <h2>5. Send Prompts to OBALA</h2>
+            <h3>Endpoint:</h3>
+            <p><span class="method">POST</span> <span class="path">/obala_chat</span></p>
+
+            <h3>Headers:</h3>
+            <div class="code-block">
+                <button class="copy-button" onclick="copyCode(this)"><i class="fas fa-copy"></i> Copy</button>
+<pre><code><span class="header-key">X-API-Key</span>: YOUR_API_KEY
+<span class="header-key">Content-Type</span>: application/json</code></pre>
+            </div>
+
+            <h3>Request Body:</h3>
+            <div class="code-block">
+                <button class="copy-button" onclick="copyCode(this)"><i class="fas fa-copy"></i> Copy</button>
+<pre><code>{
+  <span class="string">"prompt"</span>: <span class="string">"Kɔkɔɔ no yɛ dɛn wɔ Twi mu?"</span>
+}</code></pre>
+            </div>
+
+            <h3>Example with curl:</h3>
+            <div class="code-block">
+                <button class="copy-button" onclick="copyCode(this)"><i class="fas fa-copy"></i> Copy</button>
+<pre><code><span class="keyword">curl</span> -X <span class="method">POST</span> https://obala-api.onrender.com/obala_chat \
+-H <span class="string">"X-API-Key: 7e5c4b8b6d9a45b293bf9d7b8b143c0a"</span> \
+-H <span class="string">"Content-Type: application/json"</span> \
+-d <span class="string">'{"prompt": "Kɔkɔɔ no yɛ dɛn wɔ Twi mu?"}'</span></code></pre>
+            </div>
+
+            <h3>Response:</h3>
+            <div class="code-block">
+                <button class="copy-button" onclick="copyCode(this)"><i class="fas fa-copy"></i> Copy</button>
+<pre><code>{
+  <span class="string">"response"</span>: <span class="string">"Kɔkɔɔ no yɛ 'red' wɔ Twi mu."</span>,
+  <span class="string">"audio_path"</span>: <span class="string">"/tmp/gradio/audio.wav"</span>,
+  <span class="string">"usage"</span>: {
+    <span class="string">"used"</span>: <span class="number">3</span>,
+    <span class="string">"limit"</span>: <span class="number">200</span>,
+    <span class="string">"plan"</span>: <span class="string">"free"</span>
+  }
+}</code></pre>
+            </div>
+        </section>
+
+        <section id="api-usage">
+            <h2>6. API Usage & Limits</h2>
+            <p>Each user starts on the Free Plan:</p>
+            <ul>
+                <li><strong>200 requests per month</strong></li>
+                <li>API Key expires after <strong>30 days</strong></li>
+            </ul>
+            <p>Extend or upgrade by contacting WAIT Technologies</p>
+        </section>
+
+        <section id="common-errors">
+            <h2>7. Common Errors</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Meaning</th>
+                            <th>Fix</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="error-code">400</span></td>
+                            <td>Missing email or password</td>
+                            <td>Include required fields in JSON</td>
+                        </tr>
+                        <tr>
+                            <td><span class="error-code">401</span></td>
+                            <td>Invalid credentials</td>
+                            <td>Check your email or password</td>
+                        </tr>
+                        <tr>
+                            <td><span class="error-code">403</span></td>
+                            <td>Invalid or expired API key</td>
+                            <td>Generate a new key</td>
+                        </tr>
+                        <tr>
+                            <td><span class="error-code">429</span></td>
+                            <td>Usage limit reached</td>
+                            <td>Upgrade your plan</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="example-integration">
+            <h2>8. Example Integration in Python</h2>
+            <div class="code-block">
+                <button class="copy-button" onclick="copyCode(this)"><i class="fas fa-copy"></i> Copy</button>
+<pre><code><span class="keyword">import</span> requests
+
+<span class="variable">API_KEY</span> = <span class="string">"YOUR_API_KEY"</span>
+<span class="variable">BASE_URL</span> = <span class="string">"https://obala-api.onrender.com"</span>
+
+<span class="variable">headers</span> = {<span class="string">"X-API-Key"</span>: <span class="variable">API_KEY</span>, <span class="string">"Content-Type"</span>: <span class="string">"application/json"</span>}
+<span class="variable">data</span> = {<span class="string">"prompt"</span>: <span class="string">"Mepa wo kyɛw, bɔ me din."</span>}
+
+<span class="variable">res</span> = requests.<span class="keyword">post</span>(<span class="keyword">f</span><span class="string">"{BASE_URL}/obala_chat"</span>, json=<span class="variable">data</span>, headers=<span class="variable">headers</span>)
+<span class="keyword">print</span>(<span class="variable">res</span>.json())</code></pre>
+            </div>
+        </section>
+
+        <section id="contact-support">
+            <h2>9. Contact & Support</h2>
+            <p>For API issues, key resets, or partnership inquiries:</p>
+            <ul>
+                <li>📧 Email: <a href="mailto:waittech1.0@gmail.com">waittech1.0@gmail.com</a></li>
+                <li>📞 Phone: <a href="tel:+233531803680">+233 53 180 3680</a></li>
+            </ul>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 WAIT Technologies. All Rights Reserved.</p>
+        <p>OBALA API Documentation</p>
+    </footer>
+
+    <script>
+        // --- Theme Toggle Script ---
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const htmlElement = document.documentElement;
+        const toggleText = themeToggleBtn.querySelector('.toggle-text');
+        const toggleIcon = themeToggleBtn.querySelector('i');
+
+        // Check for saved theme preference or default to dark
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+        if (currentTheme) {
+            htmlElement.setAttribute('data-theme', currentTheme);
+            updateThemeToggleButton(currentTheme);
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            let newTheme = htmlElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            htmlElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeToggleButton(newTheme);
+        });
+
+        function updateThemeToggleButton(theme) {
+            if (theme === 'dark') {
+                toggleIcon.className = 'fas fa-moon';
+                toggleText.textContent = 'Dark Mode';
+            } else {
+                toggleIcon.className = 'fas fa-sun';
+                toggleText.textContent = 'Light Mode';
+            }
+        }
+
+        // --- Copy Code Snippet Script ---
+        function copyCode(button) {
+            const codeBlock = button.nextElementSibling; // Get the <pre> element
+            const codeText = codeBlock.textContent;
+
+            navigator.clipboard.writeText(codeText).then(() => {
+                const originalText = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+                button.innerHTML = '<i class="fas fa-times"></i> Error';
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
